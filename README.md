@@ -16,7 +16,7 @@ I host this project on minimal VPS server, 1GB of RAM, 20GB of HDD, behind nginx
 # Virtualenv
 virtualenv -p $(which python3) hackaday
 cd hackaday && source bin/activate
-pip3 install flask bs4
+pip3 install flask bs4 lxml
 
 # Flask
 export FLASK_RUN=app
