@@ -3,14 +3,24 @@ import bs4 as bs
 import urllib.request
 from flask import request
 from flask import redirect
+import re
 app = Flask(__name__)
 blog = "https://hackaday.com/blog/page/"
+
+def matchPost(link):
+    match = re.match(r'^https://hackaday\.com/20\d{2}/\d{2}/\d{2}/[\S\-\d]+/$', link)
+    return match
 
 @app.route('/post', methods=['GET'])
 def post():
     hpost = request.args.get('hpost')
+    # Check for regex match
+    if not matchPost(hpost):
+        return "Link match error"
+
     source = urllib.request.urlopen(hpost)
     soup = bs.BeautifulSoup(source, 'lxml')
+    
     # Title
     returnString = "<html><head>" + str(soup.title) + "</head><body><h1><a href=\"/\">Hackaday Lite</a></h1><h2>"
     # Header
@@ -24,9 +34,13 @@ def post():
 
 @app.route('/page', methods=['GET'])
 def page():
-    # Header
     pageNumber = str(request.args.get('hpage'))
-    returnString = "<html><head></head><body><h1>Hackaday Lite</h1><p>Page " + pageNumber + "<ul>"
+    # Match number
+    if not re.match(r'^\d+$', pageNumber):
+        return "Page number match error"
+    
+    # Header
+    returnString = "<html><head><title>Hackaday Lite - " + pageNumber + "</title></head><body><h1>Hackaday Lite</h1><p>Page " + pageNumber + "<ul>"
     source = urllib.request.urlopen(blog + pageNumber).read()
     soup = bs.BeautifulSoup(source, 'lxml')
     articles = soup.find_all("article")
@@ -43,17 +57,4 @@ def page():
 @app.route('/')
 def root():
     return redirect("/page?hpage=1", code=302)
-
-#@app.route('/')
-#def root():
-#    returnString = "<html><head></head><body><p>made by d3suu, work in progress</p><h1>First 10 pages of Hackaday:</h1><ul>"
-#    for n in range(1, 10):
-#        source = urllib.request.urlopen(blog + str(n)).read()
-#        soup = bs.BeautifulSoup(source, 'lxml')
-#        #titles = soup.find_all("h1", {"class": "entry-title"})
-#        articles = soup.find_all("article")
-#        for x in articles:
-#            returnString += "<li><a href=\"/post?hpost=" + x.find("a").get("href") + "\">" + x.find("h1").string + "</a></li>"
-#    returnString += "</ul></body></html>"
-#    return returnString
 
