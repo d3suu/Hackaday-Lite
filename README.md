@@ -2,7 +2,7 @@
 Flask-bs4 proxy for lightweight Hackaday reader
 
 ## Why
-My mobile internet sucks, but I want to read hackaday. This proxy makes absolute basic html from articles and /blog pages. For comparison, ![this article](https://hackaday.com/2020/03/04/raising-the-titanics-radio-room/) needs to download 1.7MB of data, while on my proxy it's only 79.30kB. With internet speed in <0.1Mb/s range, it works pretty well.
+My mobile internet sucks, but I want to read hackaday. This proxy makes absolute basic html from articles and /blog pages. For comparison, [this article](https://hackaday.com/2020/03/04/raising-the-titanics-radio-room/) needs to download 1.7MB of data, while on my proxy it's only 79.30kB. With internet speed in <0.1Mb/s range, it works pretty well.
 
 ## Support Hackaday
 I guess most of their income comes from ad revenue. When not reading with proxy, read with standard website.
