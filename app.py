@@ -45,7 +45,10 @@ def page():
     soup = bs.BeautifulSoup(source, 'lxml')
     articles = soup.find_all("article")
     for x in articles:
-        returnString += "<li><a href=\"/post?hpost=" + str(x.find("a").get("href")) + "\">" + str(x.find("h1").string) + "</a></li>"
+        articleTitle = str(x.find("h1").find("a")).replace("<em>","").replace("</em>","")
+        articleTitleString = bs.BeautifulSoup(articleTitle, 'lxml').string
+        articleLink = str(x.find("a").get("href"))
+        returnString += "<li><a href=\"/post?hpost=" + articleLink + "\">" + articleTitleString + "</a></li>"
     returnString += "</ul>"
     # Previous page button
     if pageNumber != "1":
