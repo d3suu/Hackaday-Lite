@@ -36,6 +36,6 @@ server {
 ## Docker image
 ```
 docker build -t hackaday-lite .
-docker run -d -p 127.0.0.1:5000:5000/tcp hackaday-lite
+docker run -d -p 127.0.0.1:5000:5000/tcp --restart unless-stopped hackaday-lite
 ```
 
